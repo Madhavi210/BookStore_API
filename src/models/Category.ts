@@ -1,18 +1,13 @@
 import mongoose, {Schema, Document} from 'mongoose'
+import {iCategory} from '../interface/model.interface';
 
-// Define enum for category types
 enum CategoryType {
-    Fiction = "Fiction",
-    NonFiction = "Non-Fiction",
-    Romance = "Romance",
-    Thriller = "Thriller",
-}
-
-export  interface iCategory extends Document{
-     name: CategoryType,
-}
-
-
+     Fiction = "Fiction",
+     NonFiction = "Non-Fiction",
+     Romance = "Romance",
+     Thriller = "Thriller",
+ }
+ 
 const categorySchema: Schema = new Schema<iCategory>({
      name:{
         type:String,

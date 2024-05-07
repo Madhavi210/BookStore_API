@@ -1,16 +1,10 @@
 import mongoose, {Schema, Document} from 'mongoose'
 import { Author } from './Author';
+import {iBooks} from '../interface/model.interface'
 
-export interface Books extends Document{
-     title: string,
-     author: mongoose.Schema.Types.ObjectId,
-     category: mongoose.Schema.Types.ObjectId,
-     ISBN: string,
-     description: string,
-     price: number
-}
 
-const bookSchema: Schema = new Schema<Books>({
+
+const bookSchema: Schema = new Schema<iBooks>({
      title:{
         type:String,
         required: true,
@@ -40,5 +34,5 @@ const bookSchema: Schema = new Schema<Books>({
 
 })
 
-export const  Books =  mongoose.model<Books>("Books", bookSchema);
+export const  Books =  mongoose.model<iBooks>("Books", bookSchema);
 

@@ -1,15 +1,9 @@
 
 import mongoose, {Schema, Document} from 'mongoose'
+import {iAuthor} from '../interface/model.interface'
 
-export interface Author extends Document{
-    name: string,
-    biography: string,
-    nationality: string,
-    username: string,
-    password: string
-}
 
-const authorSchema: Schema = new Schema<Author>({
+const authorSchema: Schema = new Schema<iAuthor>({
      name:{
         type:String,
         required: true,
@@ -34,5 +28,5 @@ const authorSchema: Schema = new Schema<Author>({
 
 })
 
-export const  Author =  mongoose.model<Author>("Author", authorSchema);
+export const  Author =  mongoose.model<iAuthor>("Author", authorSchema);
 
