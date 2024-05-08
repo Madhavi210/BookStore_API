@@ -1,3 +1,4 @@
+import { Category } from '../models/Category';
 import { Author } from './../models/Author';
 import { Books } from './../models/Book';
 import express , {Request,Response} from 'express';
@@ -55,16 +56,14 @@ export class bookService {
     //create book
     postBook = async (req:Request ,res:Response) => {
         console.log("before create");
-        const { title, price, description, ISBN } = req.body;
+        const { title, price, description, ISBN, author , category} = req.body;
         // const authorId = req.user.authorId; // Assuming the authorId is stored in req.user.authorId
 
             // Validate input
-            if (!title || !price || !description || !ISBN) {
+            if (!title || !price || !description || !ISBN || !author || !category) {
                 return res.status(400).json({ error: 'All fields are required.' });
             }
-            // if (req.user.role !== 'author' && req.user.authorId !== author) {
-            //     return res.status(403).json({ message: 'You are not authorized to update this book' });
-            // }
+         
 
         const newBook = await Books.create(req.body);
         res.status(201).json(newBook);
@@ -72,23 +71,62 @@ export class bookService {
         console.log("book added");
         
     }
-
-    // //delete all books 
+    //delete all books 
     // removeBook = async (req:Request ,res:Response) =>{
     //     const book = await Books.deleteMany();
     //     res.status(200).json(book)
     //     console.log(book);
     // }
 
-    //delete book by id 
-    deleteBookById = async (req:Request ,res:Response)  =>{
-        const  { id }= req.params
-        const book = await Books.findByIdAndDelete(id) 
-        console.log(book);
-        if(!book){
-          return res.status(404).json({message: "Invalid Movie ID"})  // RETURN NEEDED HERE
+    updateBookByAuthors = async (req: Request, res: Response) => {
+        const { id } = req.params; // Get book ID from request params
+        const { authorId } = req.body; 
+        const book = await Books.findById(id);
+        try {
+            if (!book) {
+                return res.status(404).json({ message: 'Book not found' });
+            }
+            // Check if the author of the book matches the authenticated author
+            if(book.author.toString() == authorId){
+                let newBook = await Books.findByIdAndUpdate(id, req.body)
+                return res.status(200).json({ message: 'Book updated successfully', newBook });
+            }
+            res.status(201).json({message: "Not Authorized To update"})
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ message: 'Internal server error' });
         }
-        res.status(200).json(book)
     }
+
+    deleteBookByAuthor = async (req: Request, res: Response)=> {
+        const { id } = req.params; // Get book ID from request params
+        const { authorId } = req.body; 
+        const book = await Books.findById(id);
+        try {
+            if (!book) {
+                return res.status(404).json({ message: 'Book not found' });
+            }
+            if (book.author.toString() == authorId) {
+                const deletedBook = await Books.findByIdAndDelete(id, req.body)
+                return res.status(200).json({messege: "Book deleted successfully", deletedBook})
+            }
+            return res.status(403).json({ message: 'You are not authorized to delete this book' });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+    }
+
+    // //delete book by id 
+    // deleteBookById = async (req:Request ,res:Response)  =>{
+    //     const  { id }= req.params
+    //     const book = await Books.findByIdAndDelete(id) 
+    //     console.log(book);
+    //     if(!book){
+    //       return res.status(404).json({message: "Invalid Movie ID"})  // RETURN NEEDED HERE
+    //     }
+    //     res.status(200).json(book)
+    // }
   
 }

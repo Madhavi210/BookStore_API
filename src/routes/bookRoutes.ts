@@ -15,10 +15,14 @@ const adminLoginMiddleware = new AdminLoginMiddleware();
 router.post('/login/admin', adminLoginMiddleware.loginMiddlewareAdmin, adminLoginMiddleware.loginAdmin)
 router.get('/getAll', BookController.getAllBook);
 router.get('/:id',BookController.getBookById);
-router.post('/add', authorLoginMiddleware.isLoggedInAuthor , BookController.postBooks);
+
+router.post('/add', authorLoginMiddleware.isLoggedInAuthor, BookController.postBooks);
 router.post('/add', adminLoginMiddleware.isLoggedInAdmin , BookController.postBooks);
 // router.delete('/delete/',  BookController.removeBook);
-router.delete('/delete/:id',adminLoginMiddleware.isLoggedInAdmin ,BookController.deleteBookById);
+router.delete('/delete/:id',adminLoginMiddleware.isLoggedInAdmin ,BookController.deleteBookByAuthor);
+
+router.put('/update/:id',authorLoginMiddleware.isLoggedInAuthor, BookController.updateBookByAuthors );
+router.put('/update/:id',adminLoginMiddleware.isLoggedInAdmin, BookController.updateBookByAuthors );
 
 //admin access
 
