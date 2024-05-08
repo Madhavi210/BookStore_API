@@ -60,62 +60,64 @@ export class bookController{
         }
     }
     
-    // updateBookByAuthor = async (req: Request, res: Response) => {
-    //     const { id } = req.params; // Get book ID from request params
-    //     const { title, description, price } = req.body; // Get updated book data from request body
+    updateBookByAuthor = async (req: Request, res: Response) => {
+        const { id } = req.params; // Get book ID from request params
+        const { title, description, price } = req.body; // Get updated book data from request body
 
-    //     try {
-    //         // Find the book by ID
-    //         const book = await Books.findById(id);
+        try {
+            // Find the book by ID
+            const book = await Books.findById(id);
 
-    //         if (!book) {
-    //             return res.status(404).json({ message: 'Book not found' });
-    //         }
+            if (!book) {
+                return res.status(404).json({ message: 'Book not found' });
+            }
 
-    //         // Check if the author of the book matches the authenticated author
-    //         if (book.author !== req.user.id) {
-    //             return res.status(403).json({ message: 'You are not authorized to update this book' });
-    //         }
+            // Check if the author of the book matches the authenticated author
+            // if (book.author !== req.user.id) {
+            //     return res.status(403).json({ message: 'You are not authorized to update this book' });
+            // }
 
-    //         // Update book data
-    //         book.title = title;
-    //         book.description = description;
-    //         book.price = price;
+            // Update book data
+            book.title = title;
+            book.description = description;
+            book.price = price;
 
-    //         // Save the updated book
-    //         await book.save();
+            // Save the updated book
+            await book.save();
 
-    //         return res.status(200).json({ message: 'Book updated successfully', book });
-    //     } catch (error) {
-    //         console.error(error);
-    //         return res.status(500).json({ message: 'Internal server error' });
-    //     }
-    // }
+            return res.status(200).json({ message: 'Book updated successfully', book });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+    }
 
-    // deleteBookByAuthor = async (req: Request, res: Response)=> {
-    //     const { id } = req.params; // Get book ID from request params
+    deleteBookByAuthor = async (req: Request, res: Response)=> {
+        const { id } = req.params; // Get book ID from request params
 
-    //     try {
-    //         // Find the book by ID
-    //         const book = await Books.findById(id);
+        try {
+            // Find the book by ID
+            const book = await Books.findById(id);
 
-    //         if (!book) {
-    //             return res.status(404).json({ message: 'Book not found' });
-    //         }
+            if (!book) {
+                return res.status(404).json({ message: 'Book not found' });
+            }
 
-    //         // Check if the author of the book matches the authenticated author
-    //         if (book.author !== req.user.id) {
-    //             return res.status(403).json({ message: 'You are not authorized to delete this book' });
-    //         }
+            // Check if the author of the book matches the authenticated author
+            // if (book.author !== req.user.id) {
+            //     return res.status(403).json({ message: 'You are not authorized to delete this book' });
+            // }
 
-    //         // Delete the book
-    //         await book.remove();
+            // Delete the book
+            // await book.remove();
 
-    //         return res.status(200).json({ message: 'Book deleted successfully' });
-    //     } catch (error) {
-    //         console.error(error);
-    //         return res.status(500).json({ message: 'Internal server error' });
-    //     }
-    // }
+            return res.status(200).json({ message: 'Book deleted successfully' });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+    }
 }
+
+
 

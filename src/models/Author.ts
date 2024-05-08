@@ -24,6 +24,9 @@ const authorSchema: Schema = new Schema<iAuthor>({
      password: {
       type: String,
       required:true,
+     },
+     token:{
+      type:String,
      }
 
 })

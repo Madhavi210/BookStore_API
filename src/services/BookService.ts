@@ -59,9 +59,9 @@ export class bookService {
         // const authorId = req.user.authorId; // Assuming the authorId is stored in req.user.authorId
 
             // Validate input
-            // if (!title || !price || !description || !ISBN) {
-            //     return res.status(400).json({ error: 'All fields are required.' });
-            // }
+            if (!title || !price || !description || !ISBN) {
+                return res.status(400).json({ error: 'All fields are required.' });
+            }
             // if (req.user.role !== 'author' && req.user.authorId !== author) {
             //     return res.status(403).json({ message: 'You are not authorized to update this book' });
             // }

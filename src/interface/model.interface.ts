@@ -14,7 +14,8 @@ export interface iAuthor extends Document{
     biography: string,
     nationality: string,
     username: string,
-    password: string
+    password: string,
+    token:string
 }
 
 enum CategoryType {
